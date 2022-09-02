@@ -6,6 +6,7 @@ namespace RPG
     {
         public Rigidbody2D rb;
         public Animator animator;
+        private PropEntity targetPropEntity;
 
         private Direction direction;
         [SerializeField]
@@ -21,6 +22,28 @@ namespace RPG
             get
             {
                 return moveSpeed;
+            }
+        }
+
+        protected PropEntity TargetPropEntity
+        {
+            set 
+            {
+                if (targetPropEntity != null && targetPropEntity != value)
+                {
+                    targetPropEntity.OnUnhover(this);   // used for before-interact animations/effects
+                }
+
+                if (value != null)
+                {
+                    targetPropEntity = value;
+                    targetPropEntity.OnHover(this);     // used for before-interact animations/effects
+                }
+            }
+
+            get
+            {
+                return targetPropEntity;
             }
         }
 
@@ -48,6 +71,26 @@ namespace RPG
             if (rb.velocity.y < -1f)    return Direction.Down;
             if (rb.velocity.y > 1f)     return Direction.Up;
             return direction;
+        }
+
+        // Unity built-in function that gets called when colliders overlap
+        protected void OnTriggerEnter2D(Collider2D collider2D) 
+        {
+            PropEntity entity = collider2D.GetComponent<PropEntity>();  // try get PropEntity type component
+            if (entity != null)                                         // did we find the component?
+            {
+                TargetPropEntity = entity;                              // utilize getters/setters defined in TargetPropEntity
+            }
+        }
+
+        // Unity built-in function that gets called when colliders overlap
+        protected void OnTriggerExit2D(Collider2D collider2D)
+        {
+            PropEntity entity = collider2D.GetComponent<PropEntity>();
+            if (entity != null)
+            {
+                TargetPropEntity = null;
+            }
         }
     }
 
