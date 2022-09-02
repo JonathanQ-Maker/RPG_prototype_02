@@ -11,9 +11,6 @@ namespace RPG
         [SerializeField]
         private int health;
 
-        [SerializeField]
-        private float moveSpeed;
-
         public int MaxHealth
         {
             set
@@ -39,21 +36,5 @@ namespace RPG
                 return health;
             }
         }
-
-        public float MoveSpeed
-        {
-            set
-            {
-                moveSpeed = Mathf.Max(value, 0);
-            }
-
-            get
-            {
-                return moveSpeed;
-            }
-        }
-
-
-
     }
 }

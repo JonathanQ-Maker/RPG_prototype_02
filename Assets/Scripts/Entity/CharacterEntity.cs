@@ -8,6 +8,21 @@ namespace RPG
         public Animator animator;
 
         private Direction direction;
+        [SerializeField]
+        private float moveSpeed;
+
+        public float MoveSpeed
+        {
+            set
+            {
+                moveSpeed = Mathf.Max(value, 0);
+            }
+
+            get
+            {
+                return moveSpeed;
+            }
+        }
 
         public override void ControlUpdate(InputSystem inputSystem)
         {
@@ -27,6 +42,7 @@ namespace RPG
 
         protected virtual Direction GetInputDirection(InputSystem inputSystem)
         {
+            // when moving up left, show left as usually left sprites are more expressive
             if (rb.velocity.x < -1f)    return Direction.Left;
             if (rb.velocity.x > 1f)     return Direction.Right;
             if (rb.velocity.y < -1f)    return Direction.Down;
