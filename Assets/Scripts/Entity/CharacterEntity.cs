@@ -81,7 +81,7 @@ namespace RPG
         protected void OnTriggerEnter2D(Collider2D collider2D) 
         {
             PropEntity entity = collider2D.GetComponent<PropEntity>();  // try get PropEntity type component
-            if (entity != null)                                         // did we find the component?
+            if (entity != null)             // did we find the component?
             {
                 TargetPropEntity = entity;                              // utilize getters/setters defined in TargetPropEntity
             }
@@ -93,8 +93,19 @@ namespace RPG
             PropEntity entity = collider2D.GetComponent<PropEntity>();
             if (entity != null)
             {
-                TargetPropEntity = null;
+                if (TargetPropEntity != null)
+                {
+                    if (entity == TargetPropEntity)
+                        TargetPropEntity = null;
+                }
+                else TargetPropEntity = null;
             }
+        }
+
+        public override void Interact(InputSystem inputSystem)
+        {
+            if (TargetPropEntity != null)
+                TargetPropEntity.Interact(this);
         }
     }
 

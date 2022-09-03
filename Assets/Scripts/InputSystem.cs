@@ -6,7 +6,8 @@ namespace RPG
     {
         // allows easy swapping of control target
         public ControllableEntity controllable;
-        private Vector2 inputAxis = Vector2.zero;
+        public KeyCode interactKey;
+        public float interactCoolDown = 0.5f;
         public Vector2 InputAxis 
         {
             get 
@@ -15,12 +16,27 @@ namespace RPG
             }
         }
 
+
+        private Vector2 inputAxis = Vector2.zero;
+        private float nextInteractTime;
+        
+
         private void FixedUpdate()
         {
             inputAxis.x = Input.GetAxisRaw("Horizontal");
             inputAxis.y = Input.GetAxisRaw("Vertical");
 
             controllable.ControlUpdate(this);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(interactKey) && nextInteractTime < Time.time)
+            {
+                Debug.Log("Interact");
+                controllable.Interact(this);
+                nextInteractTime = Time.time + interactCoolDown;
+            }
         }
     }
 }
