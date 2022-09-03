@@ -35,9 +35,9 @@ namespace RPG
                     targetPropEntity.OnUnhover(this);   // used for before-interact animations/effects
                 }
 
+                targetPropEntity = value;
                 if (value != null)
                 {
-                    targetPropEntity = value;
                     targetPropEntity.OnHover(this);     // used for before-interact animations/effects
                 }
             }
