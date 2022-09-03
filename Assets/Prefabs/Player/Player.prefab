@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c2275f3025c244788be71e55176189, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseOrder: 5
+  baseOrder: 1
   maxHealth: 20
   health: 20
   rb: {fileID: 7387936061039964427}
