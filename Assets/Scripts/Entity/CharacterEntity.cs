@@ -6,6 +6,7 @@ namespace RPG
     {
         public Rigidbody2D rb;
         public Animator animator;
+        public SpriteRenderer spriteRenderer;
         private PropEntity targetPropEntity;
 
         private Direction direction;
@@ -61,6 +62,9 @@ namespace RPG
                 animator.SetFloat("Speed", rb.velocity.sqrMagnitude); // squared magnitude is cheaper to calc
                 animator.SetInteger("Direction", (int)direction);
             }
+
+            // update sortingOrder
+            spriteRenderer.sortingOrder = baseOrder - (int)(transform.position.y * ORDER_MULTIPLIER);
         }
 
         protected virtual Direction GetInputDirection(InputSystem inputSystem)

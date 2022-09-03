@@ -5,6 +5,7 @@ namespace RPG
     public class TreeProp : PropEntity
     {
         public float hoverScale = 1.1f;
+        public Sprite stump;
 
         public override void OnHover(CharacterEntity interactee)
         {
@@ -17,6 +18,11 @@ namespace RPG
         public override void OnUnhover(CharacterEntity interactee)
         {
             transform.localScale /= hoverScale;
+        }
+
+        public override void Interact(CharacterEntity interactee)
+        {
+            spriteRenderer.sprite = stump;
         }
     }
 }

@@ -5,6 +5,9 @@ namespace RPG
 {
     public abstract class Entity : MonoBehaviour
     {
+        public const int ORDER_MULTIPLIER = 10;
+        public int baseOrder;
+
         [SerializeField]
         private int maxHealth;
 
