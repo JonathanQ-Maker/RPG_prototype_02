@@ -7,12 +7,6 @@ namespace RPG
         public Rigidbody2D rb;
         public Animator animator;
         public SpriteRenderer spriteRenderer;
-        private PropEntity targetPropEntity;
-
-        private Direction direction;
-        [SerializeField]
-        private float moveSpeed;
-
         public float MoveSpeed
         {
             set
@@ -25,6 +19,11 @@ namespace RPG
                 return moveSpeed;
             }
         }
+
+        [SerializeField] // makes editable in unity
+        private float moveSpeed;
+        private PropEntity targetPropEntity;
+        private Direction direction;
 
         protected PropEntity TargetPropEntity
         {
@@ -48,16 +47,16 @@ namespace RPG
             }
         }
 
-        public override void ControlUpdate(InputSystem inputSystem)
+        public override void ControlUpdate(GameLogic gameLogic)
         {
             // move character
             if (rb != null)
-            rb.velocity = inputSystem.InputAxis * MoveSpeed;
+            rb.velocity = gameLogic.InputAxis * MoveSpeed;
 
             // update animator params
             if (animator != null)
             {
-                direction = GetInputDirection(inputSystem);
+                direction = GetInputDirection(gameLogic);
 
                 animator.SetFloat("Speed", rb.velocity.sqrMagnitude); // squared magnitude is cheaper to calc
                 animator.SetInteger("Direction", (int)direction);
@@ -67,7 +66,7 @@ namespace RPG
             spriteRenderer.sortingOrder = baseOrder - (int)(transform.position.y * ORDER_MULTIPLIER);
         }
 
-        protected virtual Direction GetInputDirection(InputSystem inputSystem)
+        protected virtual Direction GetInputDirection(GameLogic gameLogic)
         {
             // when moving up left, show left as usually left sprites are more expressive
             if (rb.velocity.x < -1f)    return Direction.Left;
@@ -77,8 +76,7 @@ namespace RPG
             return direction;
         }
 
-        // Unity built-in function that gets called when colliders overlap
-        protected void OnTriggerEnter2D(Collider2D collider2D) 
+        protected virtual void OnTriggerEnter2D(Collider2D collider2D) 
         {
             PropEntity entity = collider2D.GetComponent<PropEntity>();  // try get PropEntity type component
             if (entity != null)             // did we find the component?
@@ -87,8 +85,7 @@ namespace RPG
             }
         }
 
-        // Unity built-in function that gets called when colliders overlap
-        protected void OnTriggerExit2D(Collider2D collider2D)
+        protected virtual void OnTriggerExit2D(Collider2D collider2D)
         {
             PropEntity entity = collider2D.GetComponent<PropEntity>();
             if (entity != null)
@@ -102,7 +99,15 @@ namespace RPG
             }
         }
 
-        public override void Interact(InputSystem inputSystem)
+        protected virtual void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == Item.TAG)
+            { 
+                // TODO: try collect item
+            }
+        }
+
+        public override void Interact(GameLogic gameLogic)
         {
             if (TargetPropEntity != null)
                 TargetPropEntity.Interact(this);

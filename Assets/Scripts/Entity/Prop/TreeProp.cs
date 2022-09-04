@@ -6,7 +6,7 @@ namespace RPG
     {
         public float hoverScale = 1.1f;
         public float dropForce = 30f;
-        public GameObject apple;
+        public Item apple;
 
         public override void OnHover(CharacterEntity interactee)
         {
@@ -22,7 +22,7 @@ namespace RPG
         {
             Vector3 spawnPosition = transform.position;
             spawnPosition.y += 1f;
-            GameObject appleInstance = Instantiate(apple, spawnPosition, Quaternion.identity);
+            GameObject appleInstance = Instantiate(apple.gameObject, spawnPosition, Quaternion.identity);
             Item itemInstance = appleInstance.GetComponent<Item>();
             itemInstance.rb.velocity = Random.insideUnitCircle * dropForce;
         }

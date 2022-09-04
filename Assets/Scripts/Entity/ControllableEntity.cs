@@ -4,19 +4,65 @@ namespace RPG
 {
     public class ControllableEntity : Entity
     {
-        public virtual void ControlUpdate(InputSystem inputSystem)
+        public override int Health
         {
-            // gets called in fixed update by InputSystem when is the target of control
+            get => base.Health;
+            set
+            {
+                base.Health = value;
+                UpdateStatusDisplay();
+            }
         }
 
-        public virtual void Attack(InputSystem inputSystem)
+        public override int MaxHealth
+        {
+            get => base.MaxHealth;
+            set
+            {
+                base.MaxHealth = value;
+                UpdateStatusDisplay();
+            }
+        }
+
+        protected virtual void Start()
+        {
+            UpdateStatusDisplay();
+        }
+
+        /// <summary>
+        /// Gets called in fixed update by GameLogic when this is the target of control.
+        /// </summary>
+        /// <param name="gameLogic"></param>
+        public virtual void ControlUpdate(GameLogic gameLogic)
+        {
+            
+        }
+
+        public virtual void Attack(GameLogic gameLogic)
         { 
             
         }
 
-        public virtual void Interact(InputSystem inputSystem)
+        /// <summary>
+        /// Called when player presses interact control
+        /// </summary>
+        /// <param name="gameLogic"></param>
+        public virtual void Interact(GameLogic gameLogic)
         { 
         
+        }
+
+        /// <summary>
+        /// Updates value displays on the UI
+        /// </summary>
+        public virtual void UpdateStatusDisplay()
+        {
+            if (GameLogic.Instance.controllable == this)
+            {
+                // MaxHealth update should be first 
+                GameLogic.Instance.MaxDisplayHealth = MaxHealth;
+                GameLogic.Instance.DisplayHealth = Health;
+            }
         }
     }
 }

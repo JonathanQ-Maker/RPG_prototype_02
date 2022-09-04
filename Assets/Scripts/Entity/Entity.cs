@@ -14,7 +14,7 @@ namespace RPG
         [SerializeField]
         private int health;
 
-        public int MaxHealth
+        public virtual int MaxHealth
         {
             set
             {
@@ -27,7 +27,7 @@ namespace RPG
             }
         }
 
-        public int Health
+        public virtual int Health
         {
             set
             {
