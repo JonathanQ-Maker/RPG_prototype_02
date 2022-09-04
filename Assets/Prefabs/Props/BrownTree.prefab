@@ -151,4 +151,5 @@ MonoBehaviour:
   health: 1
   spriteRenderer: {fileID: 48310145483642278}
   hoverScale: 1.1
-  stump: {fileID: 0}
+  dropForce: 30
+  apple: {fileID: 6612439839718555199, guid: a6b50cee69bb2ca499582fc3d2a7c284, type: 3}
