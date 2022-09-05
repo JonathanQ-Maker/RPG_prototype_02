@@ -7,6 +7,7 @@ namespace RPG
         public Rigidbody2D rb;
         public Animator animator;
         public SpriteRenderer spriteRenderer;
+        public Inventory inventory;
         public float MoveSpeed
         {
             set
@@ -47,16 +48,16 @@ namespace RPG
             }
         }
 
-        public override void ControlUpdate(GameLogic gameLogic)
+        public override void ControlUpdate(InputSystem inputSystem)
         {
             // move character
             if (rb != null)
-            rb.velocity = gameLogic.InputAxis * MoveSpeed;
+            rb.velocity = inputSystem.InputAxis * MoveSpeed;
 
             // update animator params
             if (animator != null)
             {
-                direction = GetInputDirection(gameLogic);
+                direction = GetInputDirection(inputSystem);
 
                 animator.SetFloat("Speed", rb.velocity.sqrMagnitude); // squared magnitude is cheaper to calc
                 animator.SetInteger("Direction", (int)direction);
@@ -66,7 +67,7 @@ namespace RPG
             spriteRenderer.sortingOrder = baseOrder - (int)(transform.position.y * ORDER_MULTIPLIER);
         }
 
-        protected virtual Direction GetInputDirection(GameLogic gameLogic)
+        protected virtual Direction GetInputDirection(InputSystem inputSystem)
         {
             // when moving up left, show left as usually left sprites are more expressive
             if (rb.velocity.x < -1f)    return Direction.Left;
@@ -74,6 +75,11 @@ namespace RPG
             if (rb.velocity.y < -1f)    return Direction.Down;
             if (rb.velocity.y > 1f)     return Direction.Up;
             return direction;
+        }
+
+        protected virtual void Awake()
+        {
+            inventory = new Inventory(1, 1);
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collider2D) 
@@ -99,15 +105,24 @@ namespace RPG
             }
         }
 
-        protected virtual void OnCollisionEnter(Collision collision)
+        protected virtual void OnCollisionEnter2D(Collision2D collision2D)
         {
-            if (collision.gameObject.tag == Item.TAG)
-            { 
+            if (collision2D.gameObject.tag == ItemHandler.TAG)
+            {
                 // TODO: try collect item
+                ItemHandler itemHandler = collision2D.gameObject.GetComponent<ItemHandler>();
+                if (itemHandler != null)
+                {
+                    if (inventory.Add(itemHandler.GenerateItemStack()))
+                    {
+                        itemHandler.OnCollect();
+                    }
+                    Debug.Log(inventory);
+                }
             }
         }
 
-        public override void Interact(GameLogic gameLogic)
+        public override void Interact(InputSystem inputSystem)
         {
             if (TargetPropEntity != null)
                 TargetPropEntity.Interact(this);

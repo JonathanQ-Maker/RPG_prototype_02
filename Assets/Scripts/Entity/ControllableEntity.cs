@@ -30,15 +30,15 @@ namespace RPG
         }
 
         /// <summary>
-        /// Gets called in fixed update by GameLogic when this is the target of control.
+        /// Gets called in fixed update by InputSystem when this is the target of control.
         /// </summary>
-        /// <param name="gameLogic"></param>
-        public virtual void ControlUpdate(GameLogic gameLogic)
+        /// <param name="inputSystem"></param>
+        public virtual void ControlUpdate(InputSystem inputSystem)
         {
             
         }
 
-        public virtual void Attack(GameLogic gameLogic)
+        public virtual void Attack(InputSystem inputSystem)
         { 
             
         }
@@ -46,8 +46,8 @@ namespace RPG
         /// <summary>
         /// Called when player presses interact control
         /// </summary>
-        /// <param name="gameLogic"></param>
-        public virtual void Interact(GameLogic gameLogic)
+        /// <param name="inputSystem"></param>
+        public virtual void Interact(InputSystem inputSystem)
         { 
         
         }
@@ -57,11 +57,11 @@ namespace RPG
         /// </summary>
         public virtual void UpdateStatusDisplay()
         {
-            if (GameLogic.Instance.controllable == this)
+            if (InputSystem.Instance.controllable == this)
             {
                 // MaxHealth update should be first 
-                GameLogic.Instance.MaxDisplayHealth = MaxHealth;
-                GameLogic.Instance.DisplayHealth = Health;
+                DisplaySystem.Instance.MaxDisplayHealth = MaxHealth;
+                DisplaySystem.Instance.DisplayHealth = Health;
             }
         }
     }

@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7219177110325938213}
   - component: {fileID: 5103019715948993089}
   - component: {fileID: -8395370829642687470}
-  - component: {fileID: -8789955775832381667}
+  - component: {fileID: 6907801794949751516}
   m_Layer: 0
   m_Name: Apple
-  m_TagString: Untagged
+  m_TagString: ItemHandler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-8789955775832381667
+--- !u!114 &6907801794949751516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,8 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6612439839718555199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 276967ae2632139438c4f5acb5efe238, type: 3}
+  m_Script: {fileID: 11500000, guid: 18cd4f75fb3eb9a42beae504e45d40ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -8395370829642687470}
-  itemType: 0
