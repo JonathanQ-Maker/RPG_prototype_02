@@ -50,7 +50,8 @@ namespace RPG
             {
                 if (y * width + x >= slots.Length && y * width + x < 0) 
                     throw new IndexOutOfRangeException("Slot position out of bounds."); 
-                onInventoryChange(this, value, x, y);
+                if (onInventoryChange != null) 
+                    onInventoryChange(this, value, x, y);
                 slots[y * width + x] = value;
             }
         }
@@ -95,17 +96,17 @@ namespace RPG
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            for (int x = 0; x < Width; x++)
+            {
+                sb.Append("---");
+            }
+            sb.Append("\n");
+
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    sb.Append("---");
-                }
-                sb.Append("\n");
-
-                for (int x = 0; x < Width; x++)
-                {
-                    sb.AppendFormat("|{0}|", this[x, y].Count);
+                    sb.AppendFormat("|{0}|", this[x, y] != null ? this[x, y].Count : -1);
                 }
                 sb.Append("\n");
                 for (int x = 0; x < Width; x++)

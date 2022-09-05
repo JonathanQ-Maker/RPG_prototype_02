@@ -79,7 +79,7 @@ namespace RPG
 
         protected virtual void Awake()
         {
-            inventory = new Inventory(1, 1);
+            inventory = new Inventory(2, 2);
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collider2D) 
