@@ -27,8 +27,6 @@ namespace RPG
         //# Game Logic
         //########################################################
 
-        // allows easy swapping of control target
-        public ControllableEntity controllable;
         public KeyCode interactKey;
         public float interactCoolDown = 0.5f;
         public Vector2 InputAxis
@@ -38,13 +36,30 @@ namespace RPG
                 return inputAxis.normalized;
             }
         }
+        public ControllableEntity Controllable
+        {
+            get
+            {
+                return controllable;
+            }
 
+            set
+            {
+                controllable = value;
+                OnControllableChange();
+            }
+        }
+
+        // allows easy swapping of control target
+        [SerializeField]
+        private ControllableEntity controllable;
         private Vector2 inputAxis = Vector2.zero;
         private float nextInteractTime;
 
         private void Awake()
         {
             CheckInstance();
+            OnControllableChange();
         }
 
         private void FixedUpdate()
@@ -74,6 +89,14 @@ namespace RPG
         {
             inputAxis.x = Input.GetAxisRaw("Horizontal");
             inputAxis.y = Input.GetAxisRaw("Vertical");
+        }
+
+        private void OnControllableChange()
+        {
+            if (Controllable != null && Controllable is InventoryOwner)
+            {
+                DisplaySystem.Instance.inventoryWindow.Inventory = ((InventoryOwner)Controllable).Inventory;
+            }
         }
     }
 }

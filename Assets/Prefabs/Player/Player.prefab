@@ -219,6 +219,7 @@ MonoBehaviour:
   baseOrder: 1
   maxHealth: 20
   health: 20
+  dropForce: 30
   rb: {fileID: 7387936061039964427}
   animator: {fileID: 7387936061039964912}
   spriteRenderer: {fileID: 7387936061039964919}

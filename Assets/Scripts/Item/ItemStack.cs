@@ -19,7 +19,7 @@ namespace RPG
 
             set
             {
-                count = Math.Clamp(value, 0, MAX_STACK);
+                count = Math.Clamp(value, 0, MAX_STACK); // min count must be 0, it is used to check if is empty
             }
         }
 
@@ -46,6 +46,11 @@ namespace RPG
                 other.Count = leftOver;
             }
             return other.Count <= 0;
+        }
+
+        public string GetToolTip()
+        {
+            return "Default description";
         }
 
         /// <summary>

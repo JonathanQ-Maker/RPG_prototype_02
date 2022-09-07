@@ -29,6 +29,8 @@ namespace RPG
         //# Game Logic
         //########################################################
 
+        public ToolTipWindow toolTipWindow;
+        public InventoryWindow inventoryWindow;
         public Slider healthSider;
         public TMP_Text healthText;
         public int DisplayHealth

@@ -14,6 +14,20 @@ namespace RPG
             get;
             protected set;
         }
+        public virtual int Count
+        {
+            get 
+            {
+                return count;
+            }
+
+            set
+            {
+                count = Mathf.Clamp(value, 1, ItemStack.MAX_STACK);
+            }
+        }
+
+        protected int count = 1;
 
         protected virtual void Awake()
         {
@@ -28,13 +42,13 @@ namespace RPG
 
         public virtual ItemStack GenerateItemStack()
         {
-            ItemStack itemStack = new ItemStack(1, PrefabRef);
+            ItemStack itemStack = new ItemStack(Count, PrefabRef);
             return itemStack;
         }
 
         public virtual void ApplyItemStack(ItemStack itemStack)
-        { 
-            
+        {
+            Count = itemStack.Count;
         }
 
         /// <summary>

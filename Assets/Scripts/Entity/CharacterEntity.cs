@@ -2,12 +2,12 @@
 
 namespace RPG
 {
-    public class CharacterEntity : ControllableEntity
+    public class CharacterEntity : ControllableEntity, InventoryOwner
     {
+        public float dropForce;
         public Rigidbody2D rb;
         public Animator animator;
         public SpriteRenderer spriteRenderer;
-        public Inventory inventory;
         public float MoveSpeed
         {
             set
@@ -21,10 +21,36 @@ namespace RPG
             }
         }
 
+        public Inventory Inventory
+        {
+            get
+            {
+                return inventory;
+            }
+
+
+            set
+            {
+                if (inventory != null && inventory != value)
+                {
+                    Inventory temp = inventory;
+                    inventory = null;
+                    temp.Owner = null;
+                }
+
+                inventory = value;
+                if (inventory != null && inventory.Owner != this)
+                {
+                    inventory.Owner = this;
+                }
+            }
+        }
+
         [SerializeField] // makes editable in unity
         private float moveSpeed;
         private PropEntity targetPropEntity;
         private Direction direction;
+        private Inventory inventory;
 
         protected PropEntity TargetPropEntity
         {
@@ -79,7 +105,7 @@ namespace RPG
 
         protected virtual void Awake()
         {
-            inventory = new Inventory(2, 2);
+            inventory = new Inventory(2, 2, this);
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collider2D) 
@@ -126,6 +152,15 @@ namespace RPG
         {
             if (TargetPropEntity != null)
                 TargetPropEntity.Interact(this);
+        }
+
+        public void DropItem(ItemStack itemStack)
+        {
+            ItemHandler handler = Instantiate(itemStack.handlerPrefab, 
+                transform.position + new Vector3(0, 1f, 0), 
+                Quaternion.identity);
+            handler.ApplyItemStack(itemStack);
+            handler.rb.velocity = Random.insideUnitCircle * dropForce;
         }
     }
 

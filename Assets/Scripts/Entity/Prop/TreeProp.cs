@@ -21,8 +21,7 @@ namespace RPG
         {
             Vector3 spawnPosition = transform.position;
             spawnPosition.y += 1f;
-            GameObject appleInstance = Instantiate(ItemCatalog.Instance.APPLE.gameObject, spawnPosition, Quaternion.identity);
-            ItemHandler itemHandler = appleInstance.GetComponent<ItemHandler>();
+            ItemHandler itemHandler = Instantiate(ItemCatalog.Instance.APPLE, spawnPosition, Quaternion.identity);
             itemHandler.rb.velocity = Random.insideUnitCircle * dropForce;
         }
     }

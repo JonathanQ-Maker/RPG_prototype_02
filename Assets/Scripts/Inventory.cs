@@ -39,6 +39,45 @@ namespace RPG
                 return slots.Length;
             }
         }
+        public InventoryOwner Owner
+        {
+            get
+            {
+                return owner;
+            }
+
+
+            set
+            {
+                if (owner != null && owner != value)
+                {
+                    InventoryOwner temp = owner;
+                    owner = value;
+                    temp.Inventory = null;
+                }
+
+                owner = value;
+                if (owner != null && owner.Inventory != this)
+                {
+                    owner.Inventory = this;
+                }
+            }
+        }
+        public ItemStack this[int index]
+        {
+            get
+            {
+                return slots[index];
+            }
+
+            set
+            {
+                if (index < 0 || index >= slots.Length)
+                    throw new IndexOutOfRangeException("Slot position out of bounds.");
+                onInventoryChange?.Invoke(this, value, index % Width, index / Width);
+                slots[index] = value;
+            }
+        }
         public ItemStack this[int x, int y]
         {
             get
@@ -48,29 +87,34 @@ namespace RPG
 
             set
             {
-                if (y * width + x >= slots.Length && y * width + x < 0) 
-                    throw new IndexOutOfRangeException("Slot position out of bounds."); 
-                if (onInventoryChange != null) 
-                    onInventoryChange(this, value, x, y);
-                slots[y * width + x] = value;
+                this[y * width + x] = value;
             }
         }
         public OnInventoryChange onInventoryChange;
+
+
         private int width, height;
         private ItemStack[] slots;
+        private InventoryOwner owner;
 
-        public Inventory(int width, int height)
+        public Inventory(int width, int height, InventoryOwner owner)
         {
             Width = width;
             Height = height;
             slots = new ItemStack[Width * Height];
+            Owner = owner;
+        }
+
+        public ItemStack Pop(int index)
+        {
+            ItemStack itemStack = this[index];
+            this[index] = null;
+            return itemStack;
         }
 
         public ItemStack Pop(int x, int y)
         {
-            ItemStack itemStack = this[x, y];
-            this[x, y] = null;
-            return itemStack;
+            return Pop(y * Width + x);
         }
 
         public bool Add(ItemStack itemStack)

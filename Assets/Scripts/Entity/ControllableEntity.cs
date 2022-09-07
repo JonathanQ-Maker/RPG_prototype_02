@@ -57,7 +57,7 @@ namespace RPG
         /// </summary>
         public virtual void UpdateStatusDisplay()
         {
-            if (InputSystem.Instance.controllable == this)
+            if (InputSystem.Instance.Controllable == this)
             {
                 // MaxHealth update should be first 
                 DisplaySystem.Instance.MaxDisplayHealth = MaxHealth;
