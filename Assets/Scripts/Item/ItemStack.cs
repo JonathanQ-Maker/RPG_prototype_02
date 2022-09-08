@@ -1,5 +1,9 @@
-using UnityEngine;
+// Uncomment the line below to debug ItemStack memory leak
+// #define DEBUG_MEM
+
+
 using System;
+using System.Collections.Generic;
 
 namespace RPG
 {
@@ -8,6 +12,21 @@ namespace RPG
     /// </summary>
     public class ItemStack
     {
+#if DEBUG_MEM
+        private static List<WeakReference> itemStacks = new List<WeakReference>();
+
+        public static int GetAliveCount()
+        {
+            GC.Collect();
+            int count = 0;
+            foreach (WeakReference wr in itemStacks)
+            {
+                if (wr.IsAlive) count++;
+            }
+            return count;
+        }
+#endif
+
         public const int MAX_STACK = 5;
         public ItemHandler handlerPrefab;
         public int Count
@@ -29,6 +48,10 @@ namespace RPG
         {
             this.count = count;
             this.handlerPrefab = handlerPrefab;
+
+#if DEBUG_MEM
+            itemStacks.Add(new WeakReference(this));
+#endif
         }
 
         /// <summary>

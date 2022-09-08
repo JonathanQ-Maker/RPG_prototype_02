@@ -22,6 +22,7 @@ namespace RPG
             Vector3 spawnPosition = transform.position;
             spawnPosition.y += 1f;
             ItemHandler itemHandler = Instantiate(ItemCatalog.Instance.APPLE, spawnPosition, Quaternion.identity);
+            itemHandler.ItemStack = new ItemStack(1, ItemCatalog.Instance.APPLE);
             itemHandler.rb.velocity = Random.insideUnitCircle * dropForce;
         }
     }

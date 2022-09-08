@@ -56,6 +56,11 @@ namespace RPG
                     {
                         inventoryItem.Slot = this;
                     }
+                    else if (this.inventoryItem.ItemStack.Add(inventoryItem.ItemStack))
+                    {
+                        inventoryItem.Slot.inventoryWindow.Inventory[inventoryItem.ItemIndex] = null;
+                        Destroy(inventoryItem);
+                    }
                 }
             }
         }

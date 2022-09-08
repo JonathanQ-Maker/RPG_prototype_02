@@ -135,15 +135,14 @@ namespace RPG
         {
             if (collision2D.gameObject.tag == ItemHandler.TAG)
             {
-                // TODO: try collect item
+                // try collect item
                 ItemHandler itemHandler = collision2D.gameObject.GetComponent<ItemHandler>();
                 if (itemHandler != null)
                 {
-                    if (inventory.Add(itemHandler.GenerateItemStack()))
+                    if (inventory.Add(itemHandler.ItemStack))
                     {
                         itemHandler.OnCollect();
                     }
-                    Debug.Log(inventory);
                 }
             }
         }
@@ -154,12 +153,17 @@ namespace RPG
                 TargetPropEntity.Interact(this);
         }
 
+        /// <summary>
+        /// Drops item in context of this CharacterEntity, DOES NOT REMOVE FROM THIS INVENTORY
+        /// make sure to set corresponding ItemStack slot in inventory to null
+        /// </summary>
+        /// <param name="itemStack"></param>
         public void DropItem(ItemStack itemStack)
         {
             ItemHandler handler = Instantiate(itemStack.handlerPrefab, 
                 transform.position + new Vector3(0, 1f, 0), 
                 Quaternion.identity);
-            handler.ApplyItemStack(itemStack);
+            handler.ItemStack = itemStack;
             handler.rb.velocity = Random.insideUnitCircle * dropForce;
         }
     }
