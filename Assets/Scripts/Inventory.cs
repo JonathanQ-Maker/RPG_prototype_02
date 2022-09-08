@@ -117,8 +117,22 @@ namespace RPG
             return Pop(y * Width + x);
         }
 
+        /// <summary>
+        /// <para>Adds itemStack to inventory</para>
+        /// <para>time complexity O(n)</para>
+        /// </summary>
+        /// <param name="itemStack">itemStack to add</param>
+        /// <returns>did itemStack fit</returns>
         public bool Add(ItemStack itemStack)
         {
+            ItemStack item = FindNotFull(itemStack);
+            if (item != null)
+            {
+                if (item.Add(itemStack))
+                {
+                    return true;
+                }
+            }
             for (int i = 0; i < Length; i++)
             {
                 if (slots[i] == null)
@@ -126,15 +140,38 @@ namespace RPG
                     slots[i] = itemStack;
                     return true;
                 }
-                else
-                {
-                    if (slots[i].Add(itemStack))
-                    {
-                        return true;
-                    }
-                }
             }
             return false;
+        }
+
+        /// <summary>
+        /// <para>scans through inventory for itemStack</para>
+        /// <para>time complexity O(n)</para>
+        /// </summary>
+        /// <param name="itemStack">target item</param>
+        /// <returns>equal ItemStack</returns>
+        public ItemStack Find(ItemStack itemStack)
+        {
+            foreach (ItemStack item in slots)
+            {
+                if (item == itemStack) return item;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// <para>scans through inventory for itemStack with Count < MAX_STACK</para>
+        /// <para>time complexity O(n)</para>
+        /// </summary>
+        /// <param name="itemStack">target item</param>
+        /// <returns>equal ItemStack</returns>
+        public ItemStack FindNotFull(ItemStack itemStack)
+        {
+            foreach (ItemStack item in slots)
+            {
+                if (item == itemStack && item.Count < ItemStack.MAX_STACK) return item;
+            }
+            return null;
         }
 
         public override string ToString()

@@ -161,7 +161,7 @@ namespace RPG
         public void DropItem(ItemStack itemStack)
         {
             ItemHandler handler = Instantiate(itemStack.handlerPrefab, 
-                transform.position + new Vector3(0, 1f, 0), 
+                transform.position + new Vector3(0, 0.5f, 0), 
                 Quaternion.identity);
             handler.ItemStack = itemStack;
             handler.rb.velocity = Random.insideUnitCircle * dropForce;

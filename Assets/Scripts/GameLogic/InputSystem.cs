@@ -79,7 +79,6 @@ namespace RPG
         {
             if (Input.GetKeyDown(interactKey) && nextInteractTime < Time.time)
             {
-                Debug.Log("Interact");
                 controllable.Interact(this);
                 nextInteractTime = Time.time + interactCoolDown;
             }
