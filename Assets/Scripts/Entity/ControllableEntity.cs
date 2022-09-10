@@ -24,7 +24,7 @@ namespace RPG
             }
         }
 
-        protected virtual void Start()
+        protected override void Start()
         {
             UpdateStatusDisplay();
         }

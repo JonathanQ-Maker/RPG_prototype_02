@@ -7,7 +7,6 @@ namespace RPG
         public float dropForce;
         public Rigidbody2D rb;
         public Animator animator;
-        public SpriteRenderer spriteRenderer;
         public float MoveSpeed
         {
             set
@@ -47,7 +46,7 @@ namespace RPG
         }
 
         [SerializeField] // makes editable in unity
-        private float moveSpeed;
+        protected float moveSpeed;
         private PropEntity targetPropEntity;
         private Direction direction;
         private Inventory inventory;
@@ -89,8 +88,7 @@ namespace RPG
                 animator.SetInteger("Direction", (int)direction);
             }
 
-            // update sortingOrder
-            spriteRenderer.sortingOrder = baseOrder - (int)(transform.position.y * ORDER_MULTIPLIER);
+            UpdateSortingOrder();
         }
 
         protected virtual Direction GetInputDirection(InputSystem inputSystem)
@@ -105,7 +103,7 @@ namespace RPG
 
         protected virtual void Awake()
         {
-            inventory = new Inventory(2, 2, this);
+            inventory = new Inventory(2, 5, this);
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collider2D) 

@@ -7,6 +7,7 @@ namespace RPG
     {
         public const int ORDER_MULTIPLIER = 10;
         public int baseOrder;
+        public SpriteRenderer spriteRenderer;
 
         [SerializeField]
         private int maxHealth;
@@ -31,13 +32,30 @@ namespace RPG
         {
             set
             {
+                int oldHealth = health;
                 health = Mathf.Max(value, 0);
+                OnHealthChange(oldHealth);
             }
 
             get
             {
                 return health;
             }
+        }
+
+        protected virtual void Start()
+        {
+            UpdateSortingOrder();
+        }
+
+        protected virtual void UpdateSortingOrder()
+        {
+            spriteRenderer.sortingOrder = baseOrder - (int)(transform.position.y * ORDER_MULTIPLIER);
+        }
+
+        protected virtual void OnHealthChange(int oldHealth)
+        { 
+            
         }
     }
 }

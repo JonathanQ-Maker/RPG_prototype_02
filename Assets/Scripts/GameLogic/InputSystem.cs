@@ -27,7 +27,7 @@ namespace RPG
         //# Game Logic
         //########################################################
 
-        public KeyCode interactKey;
+        public KeyCode interactKey, invToggleKey;
         public float interactCoolDown = 0.5f;
         public Vector2 InputAxis
         {
@@ -58,7 +58,7 @@ namespace RPG
 
         private void Awake()
         {
-            CheckInstance();
+            CheckInstance(); // always first
             OnControllableChange();
         }
 
@@ -72,7 +72,8 @@ namespace RPG
 
         private void Update()
         {
-            CheckInteract(); // always first
+            CheckInteract(); 
+            CheckInventoryToggle();
         }
 
         private void CheckInteract()
@@ -81,6 +82,14 @@ namespace RPG
             {
                 controllable.Interact(this);
                 nextInteractTime = Time.time + interactCoolDown;
+            }
+        }
+
+        private void CheckInventoryToggle()
+        {
+            if (Input.GetKeyDown(invToggleKey))
+            {
+                DisplaySystem.Instance.inventoryWindow.Active = !DisplaySystem.Instance.inventoryWindow.Active;
             }
         }
 
