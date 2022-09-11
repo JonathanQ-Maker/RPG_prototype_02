@@ -164,6 +164,28 @@ namespace RPG
             handler.ItemStack = itemStack;
             handler.rb.velocity = Random.insideUnitCircle * dropForce;
         }
+
+        public Direction GetRelativeDir(Vector2 position)
+        {
+            Vector2 delta = ((Vector2)transform.position) - position;
+            if (delta.x < 1f) return Direction.Left;
+            if (delta.x > 1f) return Direction.Right;
+            if (delta.y < 1f) return Direction.Down;
+            if (delta.y > 1f) return Direction.Up;
+            return direction;
+        }
+
+        protected virtual void PlayHurtAnim(Direction faceDirection)
+        {
+            direction = faceDirection;
+            animator.SetTrigger("Hurt");
+        }
+
+        public override void Hurt(int damage, Entity attacker)
+        {
+            base.Hurt(damage, attacker);
+            PlayHurtAnim(GetRelativeDir(attacker.transform.position));
+        }
     }
 
     public enum Direction

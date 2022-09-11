@@ -37,6 +37,7 @@ namespace RPG
         protected virtual void ShootBomb()
         {
             BomberPlantBomb bomb = Instantiate(bombPreab, bombSpawnTransform.position, Quaternion.identity);
+            bomb.BomberPlant = this;
             bomb.LaunchTo(target.transform.position);
         }
 

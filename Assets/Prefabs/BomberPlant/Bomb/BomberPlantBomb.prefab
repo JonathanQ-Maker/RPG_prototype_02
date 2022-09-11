@@ -125,7 +125,7 @@ MonoBehaviour:
   maxHealth: 1
   health: 1
   animator: {fileID: 906050934844605931}
-  explosionRadius: 1
+  explosionRadius: 2
   damage: 5
   rb: {fileID: 4917415187184075394}
 --- !u!50 &4917415187184075394

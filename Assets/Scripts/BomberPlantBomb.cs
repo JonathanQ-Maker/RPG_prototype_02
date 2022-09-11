@@ -10,6 +10,8 @@ namespace RPG
         public int damage = 5;
         public Rigidbody2D rb;
 
+        public BomberPlant BomberPlant { get; set; }
+
         protected void Update()
         {
             UpdateSortingOrder();
@@ -23,7 +25,7 @@ namespace RPG
             {
                 if (collider2D.TryGetComponent(out Entity entity))
                 {
-                    entity.Health -= damage;
+                    entity.Hurt(damage, this);
                 }
             }
             Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);

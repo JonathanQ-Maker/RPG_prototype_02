@@ -10,10 +10,10 @@ namespace RPG
         public SpriteRenderer spriteRenderer;
 
         [SerializeField]
-        private int maxHealth;
+        private int maxHealth = 1;
 
         [SerializeField]
-        private int health;
+        private int health = 1;
 
         public virtual int MaxHealth
         {
@@ -28,12 +28,16 @@ namespace RPG
             }
         }
 
+        /// <summary>
+        /// Mostly use this for internal animation-less functionalities
+        /// See also: Hurt() Heal()
+        /// </summary>
         public virtual int Health
         {
             set
             {
                 int oldHealth = health;
-                health = Mathf.Max(value, 0);
+                health = Mathf.Clamp(value, 0, MaxHealth);
                 OnHealthChange(oldHealth);
             }
 
@@ -45,6 +49,7 @@ namespace RPG
 
         protected virtual void Start()
         {
+            Health = MaxHealth;
             UpdateSortingOrder();
         }
 
@@ -56,6 +61,26 @@ namespace RPG
         protected virtual void OnHealthChange(int oldHealth)
         { 
             
+        }
+
+        /// <summary>
+        /// Health decrease with animation
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="attacker"></param>
+        public virtual void Hurt(int damage, Entity attacker)
+        {
+            Health -= damage;
+        }
+
+        /// <summary>
+        /// Health increase with animation
+        /// </summary>
+        /// <param name="healing"></param>
+        /// <param name="healer"></param>
+        public virtual void Heal(int healing, Entity healer)
+        {
+            Health += healing;
         }
     }
 }

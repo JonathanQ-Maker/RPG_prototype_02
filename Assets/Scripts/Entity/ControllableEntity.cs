@@ -24,6 +24,21 @@ namespace RPG
             }
         }
 
+        public virtual bool CanControl
+        {
+            get
+            {
+                return canControl;
+            }
+
+            set
+            {
+                canControl = value;
+            }
+        }
+
+        private bool canControl;
+
         protected override void Start()
         {
             UpdateStatusDisplay();
