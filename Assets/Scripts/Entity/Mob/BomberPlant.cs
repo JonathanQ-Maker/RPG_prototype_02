@@ -48,11 +48,12 @@ namespace RPG
 
         protected virtual void TryAttack()
         {
-            if (nextAttackTime < Time.time && target != null)
+            if (nextAttackTime >= attackCoolDown && target != null)
             { 
                 animator.SetTrigger("Attack");
-                nextAttackTime = Time.time + attackCoolDown;
+                nextAttackTime = 0;
             }
+            else nextAttackTime += updateDelta;
         }
 
         protected IEnumerator AILoop()

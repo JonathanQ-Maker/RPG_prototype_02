@@ -158,11 +158,13 @@ namespace RPG
         /// <param name="itemStack"></param>
         public void DropItem(ItemStack itemStack)
         {
+            Vector2 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            Debug.Log(direction);
             ItemHandler handler = Instantiate(itemStack.handlerPrefab, 
-                transform.position + new Vector3(0, 0.5f, 0), 
+                (Vector2)transform.position + direction * 2f, 
                 Quaternion.identity);
             handler.ItemStack = itemStack;
-            handler.rb.velocity = Random.insideUnitCircle * dropForce;
+            handler.rb.velocity = direction * dropForce;
         }
 
         public Direction GetRelativeDir(Vector2 position)
@@ -177,7 +179,6 @@ namespace RPG
 
         protected virtual void PlayHurtAnim(Direction faceDirection)
         {
-            Debug.Log(faceDirection);
             direction = faceDirection;
             animator.SetTrigger("Hurt");
         }

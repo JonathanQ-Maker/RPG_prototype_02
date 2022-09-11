@@ -28,7 +28,8 @@ namespace RPG
                     entity.Hurt(damage, this);
                 }
             }
-            Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+            // -0.1f to ensure bomb wont show up after it has exploded, otherwise you get a flash of the bomb again
+            Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length - 0.1f); 
         }
 
         public void LaunchTo(Vector2 targetPos)

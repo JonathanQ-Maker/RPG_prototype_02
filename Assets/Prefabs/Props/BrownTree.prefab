@@ -147,9 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseOrder: 0
+  spriteRenderer: {fileID: 48310145483642278}
   maxHealth: 1
   health: 1
-  spriteRenderer: {fileID: 48310145483642278}
   hoverScale: 1.1
-  dropForce: 30
-  apple: {fileID: -8789955775832381667, guid: a6b50cee69bb2ca499582fc3d2a7c284, type: 3}
+  dropForce: 10
