@@ -167,16 +167,17 @@ namespace RPG
 
         public Direction GetRelativeDir(Vector2 position)
         {
-            Vector2 delta = ((Vector2)transform.position) - position;
-            if (delta.x < 1f) return Direction.Left;
-            if (delta.x > 1f) return Direction.Right;
-            if (delta.y < 1f) return Direction.Down;
-            if (delta.y > 1f) return Direction.Up;
+            Vector2 delta = position - ((Vector2)transform.position);
+            if (delta.x < -0.1f) return Direction.Left;
+            if (delta.x > 0.1f) return Direction.Right;
+            if (delta.y < -0.1f) return Direction.Down;
+            if (delta.y > 0.1f) return Direction.Up;
             return direction;
         }
 
         protected virtual void PlayHurtAnim(Direction faceDirection)
         {
+            Debug.Log(faceDirection);
             direction = faceDirection;
             animator.SetTrigger("Hurt");
         }
