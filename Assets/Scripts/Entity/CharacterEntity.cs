@@ -45,6 +45,20 @@ namespace RPG
             }
         }
 
+        protected virtual Direction Direction
+        {
+            get
+            {
+                return direction;
+            }
+
+            set
+            {
+                animator.SetInteger("Direction", (int)value);
+                direction = value;
+            }
+        }
+
         [SerializeField] // makes editable in unity
         protected float moveSpeed;
         private PropEntity targetPropEntity;
@@ -82,10 +96,9 @@ namespace RPG
             // update animator params
             if (animator != null)
             {
-                direction = GetInputDirection(inputSystem);
+                Direction = GetInputDirection(inputSystem);
 
                 animator.SetFloat("Speed", rb.velocity.sqrMagnitude); // squared magnitude is cheaper to calc
-                animator.SetInteger("Direction", (int)direction);
             }
 
             UpdateSortingOrder();
@@ -158,8 +171,9 @@ namespace RPG
         /// <param name="itemStack"></param>
         public void DropItem(ItemStack itemStack)
         {
-            Vector2 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-            Debug.Log(direction);
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = (mousePosition - transform.position).normalized;
+            Direction = GetRelativeDir(mousePosition);
             ItemHandler handler = Instantiate(itemStack.handlerPrefab, 
                 (Vector2)transform.position + direction * 2f, 
                 Quaternion.identity);
@@ -179,7 +193,7 @@ namespace RPG
 
         protected virtual void PlayHurtAnim(Direction faceDirection)
         {
-            direction = faceDirection;
+            Direction = faceDirection;
             animator.SetTrigger("Hurt");
         }
 
