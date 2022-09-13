@@ -7,6 +7,7 @@ namespace RPG
         public float dropForce;
         public Rigidbody2D rb;
         public Animator animator;
+        public Transform pivot, point;
         public float MoveSpeed
         {
             set
@@ -101,6 +102,7 @@ namespace RPG
                 animator.SetFloat("Speed", rb.velocity.sqrMagnitude); // squared magnitude is cheaper to calc
             }
 
+            UpdatePivotRotation();
             UpdateSortingOrder();
         }
 
@@ -201,6 +203,31 @@ namespace RPG
         {
             base.Hurt(damage, attacker);
             PlayHurtAnim(GetRelativeDir(attacker.transform.position));
+        }
+
+        protected virtual void OnAttack()
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(point.position, 1f);
+            foreach (Collider2D collider2D in colliders)
+            {
+                if (collider2D.TryGetComponent(out Entity entity) && collider2D.gameObject != gameObject)
+                {
+                    entity.Hurt(1, this);
+                }
+            }
+        }
+
+        protected virtual void UpdatePivotRotation()
+        {
+            Vector2 delta = Camera.main.ScreenToWorldPoint(Input.mousePosition) - pivot.position;
+            float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+            pivot.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
+
+        public override void Attack(InputSystem inputSystem)
+        {
+            animator.SetTrigger("Attack");
+            OnAttack();
         }
     }
 

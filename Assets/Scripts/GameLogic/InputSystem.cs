@@ -27,8 +27,10 @@ namespace RPG
         //# Game Logic
         //########################################################
 
-        public KeyCode interactKey, invToggleKey;
-        public float interactCoolDown = 0.5f;
+        public KeyCode interactKey, 
+            invToggleKey, 
+            attackKey;
+        public float interactCoolDown = 0.5f, attackCoolDown = 0.1f;
         public Vector2 InputAxis
         {
             get
@@ -54,7 +56,7 @@ namespace RPG
         [SerializeField]
         private ControllableEntity controllable;
         private Vector2 inputAxis = Vector2.zero;
-        private float nextInteractTime;
+        private float interactTime, attackTime;
 
         private void Awake()
         {
@@ -74,14 +76,32 @@ namespace RPG
         {
             CheckInteract(); 
             CheckInventoryToggle();
+            CheckAttack();
         }
 
         private void CheckInteract()
         {
-            if (Input.GetKeyDown(interactKey) && nextInteractTime < Time.time)
+            if (Input.GetKeyDown(interactKey) && interactTime > interactCoolDown)
             {
                 controllable.Interact(this);
-                nextInteractTime = Time.time + interactCoolDown;
+                interactTime = 0;
+            }
+            else
+            {
+                interactTime += Time.deltaTime;
+            }
+        }
+
+        private void CheckAttack()
+        {
+            if (Input.GetKeyDown(attackKey) && attackTime > attackCoolDown)
+            {
+                controllable.Attack(this);
+                attackTime = 0;
+            }
+            else
+            {
+                attackTime += Time.deltaTime;
             }
         }
 
