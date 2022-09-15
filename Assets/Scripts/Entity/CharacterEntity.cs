@@ -185,12 +185,27 @@ namespace RPG
 
         public Direction GetRelativeDir(Vector2 position)
         {
-            Vector2 delta = position - ((Vector2)transform.position);
-            if (delta.x < -0.1f) return Direction.Left;
-            if (delta.x > 0.1f) return Direction.Right;
-            if (delta.y < -0.1f) return Direction.Down;
-            if (delta.y > 0.1f) return Direction.Up;
-            return direction;
+            /*
+             *      \  Up / <--- this vector is "vector45"
+             *       \   /
+             *        \ /
+             *  Left   #    Right
+             *        / \
+             *       /   \
+             *      / Down\
+            */
+
+            Vector2 delta = (position - (Vector2)transform.position).normalized;
+            Vector2 vector45 = new Vector2(0.7071f, 0.7071f);
+            float dot = MathUtil.Dot(delta, vector45);
+
+            if (dot > 0 && dot < 1)
+            {
+                if (Mathf.Asin(delta.y) < Mathf.PI / 4f) return Direction.Right;
+                return Direction.Up;
+            }
+            if (Mathf.Asin(delta.y) > -Mathf.PI / 4f) return Direction.Left;
+            return Direction.Down;
         }
 
         protected virtual void PlayHurtAnim(Direction faceDirection)
@@ -226,6 +241,7 @@ namespace RPG
 
         public override void Attack(InputSystem inputSystem)
         {
+            Direction = GetRelativeDir(point.position);
             animator.SetTrigger("Attack");
             OnAttack();
         }

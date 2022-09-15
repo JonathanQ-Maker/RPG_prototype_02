@@ -94,7 +94,7 @@ namespace RPG
 
         private void CheckAttack()
         {
-            if (Input.GetKeyDown(attackKey) && attackTime > attackCoolDown)
+            if (Input.GetMouseButton(0) && attackTime > attackCoolDown)
             {
                 controllable.Attack(this);
                 attackTime = 0;
