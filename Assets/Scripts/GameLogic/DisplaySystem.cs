@@ -30,7 +30,7 @@ namespace RPG
         //########################################################
 
         public ToolTipWindow toolTipWindow;
-        public InventoryWindow inventoryWindow;
+        public InventoryWindow inventoryWindow, propInventoryWindow;
         public Slider healthSider;
         public TMP_Text healthText;
         public int DisplayHealth
@@ -75,9 +75,29 @@ namespace RPG
             }
         }
 
-        private void UpdateHealthText()
+        public void UpdateHealthText()
         {
             healthText.text = string.Format("{0}/{1}", DisplayHealth, MaxDisplayHealth);
+        }
+
+        /// <summary>
+        /// toggles character inventory, equipment UI window states.
+        /// </summary>
+        /// <returns></returns>
+        public bool ToggleInventory()
+        {
+            inventoryWindow.Active = !inventoryWindow.Active;
+            return inventoryWindow.Active;
+        }
+
+        /// <summary>
+        /// toggles prop inventory, equipment UI window states.
+        /// </summary>
+        /// <returns></returns>
+        public bool TogglePropInventory()
+        {
+            propInventoryWindow.Active = !propInventoryWindow.Active;
+            return propInventoryWindow.Active;
         }
     }
 }

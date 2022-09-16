@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RPG
 {
@@ -94,7 +95,7 @@ namespace RPG
 
         private void CheckAttack()
         {
-            if (Input.GetMouseButton(0) && attackTime > attackCoolDown)
+            if (attackTime > attackCoolDown && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 controllable.Attack(this);
                 attackTime = 0;
@@ -109,7 +110,7 @@ namespace RPG
         {
             if (Input.GetKeyDown(invToggleKey))
             {
-                DisplaySystem.Instance.inventoryWindow.Active = !DisplaySystem.Instance.inventoryWindow.Active;
+                DisplaySystem.Instance.ToggleInventory();
             }
         }
 
@@ -121,9 +122,10 @@ namespace RPG
 
         private void OnControllableChange()
         {
-            if (Controllable != null && Controllable is InventoryOwner)
+            if (Controllable != null && Controllable is IInventoryOwner)
             {
-                DisplaySystem.Instance.inventoryWindow.Inventory = ((InventoryOwner)Controllable).Inventory;
+                IInventoryOwner inventoryOwner = (IInventoryOwner)Controllable;
+                DisplaySystem.Instance.inventoryWindow.Inventory = inventoryOwner.Inventory;
             }
         }
     }

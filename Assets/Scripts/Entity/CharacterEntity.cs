@@ -2,7 +2,7 @@
 
 namespace RPG
 {
-    public class CharacterEntity : ControllableEntity, InventoryOwner
+    public class CharacterEntity : ControllableEntity, IInventoryOwner
     {
         public float dropForce;
         public Rigidbody2D rb;

@@ -32,6 +32,7 @@ namespace RPG
                     {
                         ItemStack itemStack = slot.InventoryWindow.Inventory.Pop(ItemIndex);
                         value.InventoryWindow.Inventory[value.SlotIndex] = itemStack;
+                        slot = value;
                         ItemIndex = value.SlotIndex;
                     }
                 }

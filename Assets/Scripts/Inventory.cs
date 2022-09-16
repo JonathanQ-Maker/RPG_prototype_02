@@ -39,7 +39,7 @@ namespace RPG
                 return slots.Length;
             }
         }
-        public InventoryOwner Owner
+        public IInventoryOwner Owner
         {
             get
             {
@@ -51,7 +51,7 @@ namespace RPG
             {
                 if (owner != null && owner != value)
                 {
-                    InventoryOwner temp = owner;
+                    IInventoryOwner temp = owner;
                     owner = value;
                     temp.Inventory = null;
                 }
@@ -95,9 +95,9 @@ namespace RPG
 
         private int width, height;
         private ItemStack[] slots;
-        private InventoryOwner owner;
+        private IInventoryOwner owner;
 
-        public Inventory(int width, int height, InventoryOwner owner)
+        public Inventory(int width, int height, IInventoryOwner owner)
         {
             Width = width;
             Height = height;

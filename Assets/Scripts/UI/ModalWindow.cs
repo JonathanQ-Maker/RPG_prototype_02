@@ -12,12 +12,18 @@ namespace RPG
         {
             get
             {
-                return HeaderText.text;
+                if (HeaderText != null)
+                    return HeaderText.text;
+                else
+                    return null;
             }
 
             set
             {
-                HeaderText.text = value;
+                if (HeaderText != null)
+                    HeaderText.text = value;
+                else
+                    Debug.LogWarning(name + " does not have a header text object");
             }
         }
 
