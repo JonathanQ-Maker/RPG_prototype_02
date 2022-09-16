@@ -9,7 +9,7 @@ namespace RPG
         public ItemSlot prefabSlot;
         public InventoryItem prefabInventoryItem;
         public GridLayoutGroup gridLayout;
-        private LinkedList<ItemSlot> inventorySlots = new LinkedList<ItemSlot>();
+        protected LinkedList<ItemSlot> inventorySlots = new LinkedList<ItemSlot>();
         private Inventory inventory;
         public Inventory Inventory
         {
@@ -73,7 +73,7 @@ namespace RPG
             UpdateContent();
         }
 
-        public void UpdateContent()
+        public virtual void UpdateContent()
         {
             int index = 0;
             foreach (ItemSlot itemSlot in inventorySlots)
@@ -99,7 +99,7 @@ namespace RPG
             }
         }
 
-        protected void AddInventorySlot()
+        protected virtual void AddInventorySlot()
         {
             ItemSlot slot = Instantiate(prefabSlot, gridLayout.gameObject.transform);
             slot.InventoryWindow = this;
@@ -107,7 +107,7 @@ namespace RPG
             inventorySlots.AddLast(slot);
         }
 
-        protected void RemoveInventorySlot()
+        protected virtual void RemoveInventorySlot()
         {
             ItemSlot slot = inventorySlots.Last.Value;
             inventorySlots.RemoveLast();

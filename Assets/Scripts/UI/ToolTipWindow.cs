@@ -20,6 +20,7 @@ namespace RPG
                 // Cursor.visible = !value;
                 if (!gameObject.activeSelf && value)
                 {
+                    transform.SetAsLastSibling();
                     gameObject.SetActive(value);
                 }
                 else

@@ -174,6 +174,16 @@ namespace RPG
             return null;
         }
 
+        public int GetX(int index)
+        {
+            return index % Width;
+        }
+
+        public int GetY(int index)
+        {
+            return index / Width;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
