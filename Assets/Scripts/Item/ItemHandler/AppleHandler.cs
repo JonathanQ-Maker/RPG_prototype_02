@@ -6,7 +6,7 @@ namespace RPG
     {
         protected override void Awake()
         {
-            PrefabRef = ItemCatalog.Instance.APPLE;
+            prefabType = PrefabType.Apple;
         }
     }
 }

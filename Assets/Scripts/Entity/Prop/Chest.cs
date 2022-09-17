@@ -71,10 +71,9 @@ namespace RPG
         public void DropItem(ItemStack itemStack)
         {
             Vector2 direction = MathUtil.RandomPointUnitCircle();
-            ItemHandler handler = Instantiate(itemStack.handlerPrefab,
+            ItemHandler handler = ItemHandler.Instantiate(itemStack,
                 (Vector2)transform.position + direction * 2f,
                 Quaternion.identity);
-            handler.ItemStack = itemStack;
             handler.rb.velocity = direction * Random.value * 5f;
         }
     }

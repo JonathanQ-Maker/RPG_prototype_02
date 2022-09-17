@@ -61,7 +61,9 @@ namespace RPG
             set
             {
                 itemIndex = value;
-                image.sprite = slot.InventoryWindow.Inventory[ItemIndex].handlerPrefab.GetComponent<SpriteRenderer>().sprite;
+                image.sprite = 
+                    AssetManager.GetPrefab(slot.InventoryWindow.Inventory[ItemIndex].prefabType)
+                    .GetComponent<SpriteRenderer>().sprite;
                 UpdateItemCount();
             }
         }

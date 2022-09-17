@@ -10,7 +10,7 @@ namespace RPG
     /// <summary>
     /// Item data container, for when item gameobject represnetation needs to be destroyed.
     /// </summary>
-    public class ItemStack
+    public class ItemStack : ICloneable<ItemStack>
     {
 #if DEBUG_MEM
         private static List<WeakReference> itemStacks = new List<WeakReference>();
@@ -28,7 +28,7 @@ namespace RPG
 #endif
 
         public const int MAX_STACK = 5;
-        public ItemHandler handlerPrefab;
+        public PrefabType prefabType;
         public int Count
         {
             get
@@ -41,18 +41,23 @@ namespace RPG
                 count = Math.Clamp(value, 0, MAX_STACK); // min count must be 0, it is used to check if is empty
             }
         }
+        public string toolTip;
 
         private int count;
 
-        public ItemStack(int count, ItemHandler handlerPrefab)
+        public ItemStack(int count, PrefabType prefabType, string toolTip)
         {
             this.count = count;
-            this.handlerPrefab = handlerPrefab;
+            this.prefabType = prefabType;
+            this.toolTip = toolTip;
 
 #if DEBUG_MEM
             itemStacks.Add(new WeakReference(this));
 #endif
         }
+
+        public ItemStack(PrefabType prefabType, string toolTip) : this(1, prefabType, toolTip) { }
+        public ItemStack(PrefabType prefabType) : this(1, prefabType, "") { }
 
         /// <summary>
         /// Tries to add contents from other ItemStack to this
@@ -71,10 +76,11 @@ namespace RPG
             return other.Count <= 0;
         }
 
-        public string GetToolTip()
-        {
-            return "Default description";
-        }
+
+
+
+
+
 
         /// <summary>
         /// Only checks if the Item handler is the same
@@ -97,13 +103,19 @@ namespace RPG
                 return false;
 
             ItemStack other = (ItemStack)obj;
-            return other.handlerPrefab == handlerPrefab;
+            return other.prefabType == prefabType;
         }
 
         public override int GetHashCode()
         {
             // possible hash collision even though Equals() returns false
             return base.GetHashCode();
+        }
+
+        public ItemStack Clone()
+        {
+            ItemStack itemStack = new ItemStack(Count, prefabType, toolTip);
+            return itemStack;
         }
     }
 }

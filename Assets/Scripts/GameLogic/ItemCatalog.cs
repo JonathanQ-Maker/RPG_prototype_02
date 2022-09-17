@@ -37,7 +37,6 @@ namespace RPG
         //# Catalog
         //#######################################################
 
-        [field: SerializeField] public AppleHandler APPLE { get; private set; }
-
+        public readonly ItemStack Apple = new ItemStack(PrefabType.Apple, "Apple\n\nMaterial");
     }
 }

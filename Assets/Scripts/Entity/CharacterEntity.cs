@@ -176,10 +176,10 @@ namespace RPG
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePosition - transform.position).normalized;
             Direction = GetRelativeDir(mousePosition);
-            ItemHandler handler = Instantiate(itemStack.handlerPrefab, 
+
+            ItemHandler handler = ItemHandler.Instantiate(itemStack, 
                 (Vector2)transform.position + direction * 2f, 
                 Quaternion.identity);
-            handler.ItemStack = itemStack;
             handler.rb.velocity = direction * dropForce;
         }
 

@@ -32,7 +32,7 @@ namespace RPG
 
         public void LoadItemTip(ItemStack itemStack)
         {
-            toolTip.text = itemStack.GetToolTip();
+            toolTip.text = itemStack.toolTip;
             LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
         }
 
