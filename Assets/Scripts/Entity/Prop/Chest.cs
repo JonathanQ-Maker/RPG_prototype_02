@@ -55,9 +55,17 @@ namespace RPG
         public override void Interact(CharacterEntity interactee)
         {
             animator.SetBool("Open", !animator.GetBool("Open"));
-            DisplaySystem.Instance.propInventoryWindow.Inventory = Inventory;
-            DisplaySystem.Instance.propInventoryWindow.Header = "Chest";
-            DisplaySystem.Instance.propInventoryWindow.Active = true;
+            if (animator.GetBool("Open"))
+            {
+                DisplaySystem.Instance.propInventoryWindow.Inventory = Inventory;
+                DisplaySystem.Instance.propInventoryWindow.Header = "Chest";
+                DisplaySystem.Instance.propInventoryWindow.Active = true;
+            }
+            else
+            {
+                DisplaySystem.Instance.propInventoryWindow.Inventory = null;
+                DisplaySystem.Instance.propInventoryWindow.Active = false;
+            }
         }
 
         public void DropItem(ItemStack itemStack)

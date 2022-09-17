@@ -30,9 +30,9 @@ namespace RPG
             get => base.Active;
             set
             {
+                base.Active = value;
                 if (inventory != null)
                 {
-                    base.Active = value;
                     LoadInventory(Inventory);
                     LayoutRebuilder.ForceRebuildLayoutImmediate(transform as RectTransform);
                 }
@@ -75,6 +75,7 @@ namespace RPG
 
         public virtual void UpdateContent()
         {
+            if (Inventory == null) return;
             int index = 0;
             foreach (ItemSlot itemSlot in inventorySlots)
             {

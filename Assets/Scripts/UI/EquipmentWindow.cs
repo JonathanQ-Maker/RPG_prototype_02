@@ -26,7 +26,7 @@ namespace RPG
             // for adding slots
             for (int i = inventorySlots.Count; i < inventory.Length; i = inventorySlots.Count)
             {
-                if (inventory.GetX(i) < equipmentWidth)
+                if (inventory.GetX(i) >= inventory.Width - equipmentWidth)
                 {
                     AddEquipmentSlot();
                 }
