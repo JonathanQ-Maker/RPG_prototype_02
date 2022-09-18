@@ -3,5 +3,6 @@
     Null,
 
     // Item handlers
-    Apple
+    Apple,
+    RingOfVitality
 }

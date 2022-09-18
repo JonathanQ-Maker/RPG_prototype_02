@@ -2,7 +2,7 @@
 
 namespace RPG
 {
-    public class ControllableEntity : Entity
+    public class ControllableEntity : CreatureEntity
     {
         public override int Health
         {
@@ -41,6 +41,7 @@ namespace RPG
 
         protected override void Start()
         {
+            base.Start();
             UpdateStatusDisplay();
         }
 

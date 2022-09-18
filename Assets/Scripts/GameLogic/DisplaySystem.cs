@@ -30,7 +30,8 @@ namespace RPG
         //########################################################
 
         public ToolTipWindow toolTipWindow;
-        public InventoryWindow inventoryWindow, propInventoryWindow;
+        public InventoryWindow propInventoryWindow;
+        public EquipmentWindow inventoryWindow;
         public Slider healthSider;
         public TMP_Text healthText;
         public int DisplayHealth

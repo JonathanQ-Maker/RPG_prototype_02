@@ -28,7 +28,8 @@ namespace RPG
 #endif
 
         public const int MAX_STACK = 5;
-        public PrefabType prefabType;
+        public readonly PrefabType prefabType;
+        public readonly ItemHandler itemHandler;
         public int Count
         {
             get
@@ -45,19 +46,19 @@ namespace RPG
 
         private int count;
 
-        public ItemStack(int count, PrefabType prefabType, string toolTip)
+        public ItemStack(int count, PrefabType prefabType, string toolTip, ItemHandler itemHandler)
         {
             this.count = count;
             this.prefabType = prefabType;
             this.toolTip = toolTip;
+            this.itemHandler = itemHandler;
+            if (itemHandler != null)
+                itemHandler.ItemStack = this;
 
 #if DEBUG_MEM
             itemStacks.Add(new WeakReference(this));
 #endif
         }
-
-        public ItemStack(PrefabType prefabType, string toolTip) : this(1, prefabType, toolTip) { }
-        public ItemStack(PrefabType prefabType) : this(1, prefabType, "") { }
 
         /// <summary>
         /// Tries to add contents from other ItemStack to this
@@ -114,7 +115,10 @@ namespace RPG
 
         public ItemStack Clone()
         {
-            ItemStack itemStack = new ItemStack(Count, prefabType, toolTip);
+            ItemHandler itemHandler = this.itemHandler == null ? null : (ItemHandler)Activator.CreateInstance(this.itemHandler.GetType());
+            ItemStack itemStack = new ItemStack(Count, 
+                prefabType, 
+                toolTip, itemHandler);
             return itemStack;
         }
     }

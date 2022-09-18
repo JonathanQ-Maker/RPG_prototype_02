@@ -74,7 +74,7 @@ namespace RPG
             {
                 if (index < 0 || index >= slots.Length)
                     throw new IndexOutOfRangeException("Slot position out of bounds.");
-                onInventoryChange?.Invoke(this, value, index % Width, index / Width);
+                onInventoryChange?.Invoke(this, slots[index], value, index % Width, index / Width);
                 slots[index] = value;
             }
         }
@@ -137,7 +137,7 @@ namespace RPG
             {
                 if (slots[i] == null)
                 {
-                    slots[i] = itemStack;
+                    this[i] = itemStack;
                     return true;
                 }
             }
@@ -220,5 +220,5 @@ namespace RPG
     /// <param name="targetX">slot x index</param>
     /// <param name="targetY">slot y index</param>
     /// <returns>should the change go through</returns>
-    public delegate void OnInventoryChange(Inventory inventory, ItemStack newStack, int targetX, int targetY);
+    public delegate void OnInventoryChange(Inventory inventory, ItemStack oldStack, ItemStack newStack, int targetX, int targetY);
 }

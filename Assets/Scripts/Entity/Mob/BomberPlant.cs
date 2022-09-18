@@ -38,6 +38,7 @@ namespace RPG
         {
             BomberPlantBomb bomb = Instantiate(bombPreab, bombSpawnTransform.position, Quaternion.identity);
             bomb.BomberPlant = this;
+            bomb.damage = AttackDamage;
             bomb.LaunchTo(target.transform.position);
         }
 

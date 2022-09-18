@@ -78,7 +78,14 @@ namespace RPG
 
         public void UpdateItemCount()
         {
-            footnote.text = string.Format("{0}", ItemStack.Count);
+            if (ItemStack.Count > 1)
+            {
+                footnote.text = string.Format("{0}", ItemStack.Count);
+            }
+            else
+            {
+                footnote.text = "";
+            }
         }
 
         public void ResetPosition()

@@ -5,22 +5,8 @@ namespace RPG
     public class CharacterEntity : ControllableEntity, IInventoryOwner
     {
         public float dropForce;
-        public Rigidbody2D rb;
-        public Animator animator;
         public Transform pivot, point;
-        public float MoveSpeed
-        {
-            set
-            {
-                moveSpeed = Mathf.Max(value, 0);
-            }
-
-            get
-            {
-                return moveSpeed;
-            }
-        }
-
+        
         public Inventory Inventory
         {
             get
@@ -39,6 +25,7 @@ namespace RPG
                 }
 
                 inventory = value;
+                inventory.onInventoryChange = OnInventoryChange;
                 if (inventory != null && inventory.Owner != this)
                 {
                     inventory.Owner = this;
@@ -60,8 +47,6 @@ namespace RPG
             }
         }
 
-        [SerializeField] // makes editable in unity
-        protected float moveSpeed;
         private PropEntity targetPropEntity;
         private Direction direction;
         private Inventory inventory;
@@ -103,7 +88,6 @@ namespace RPG
             }
 
             UpdatePivotRotation();
-            UpdateSortingOrder();
         }
 
         protected virtual Direction GetInputDirection(InputSystem inputSystem)
@@ -118,7 +102,7 @@ namespace RPG
 
         protected virtual void Awake()
         {
-            inventory = new Inventory(3, 5, this);
+            Inventory = new Inventory(3, 5, this);
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collider2D) 
@@ -146,15 +130,15 @@ namespace RPG
 
         protected virtual void OnCollisionEnter2D(Collision2D collision2D)
         {
-            if (collision2D.gameObject.tag == ItemHandler.TAG)
+            if (collision2D.gameObject.tag == DroppedItem.TAG)
             {
                 // try collect item
-                ItemHandler itemHandler = collision2D.gameObject.GetComponent<ItemHandler>();
-                if (itemHandler != null)
+                DroppedItem droppedItem = collision2D.gameObject.GetComponent<DroppedItem>();
+                if (droppedItem != null)
                 {
-                    if (inventory.Add(itemHandler.ItemStack))
+                    if (inventory.Add(droppedItem.ItemStack))
                     {
-                        itemHandler.OnCollect();
+                        droppedItem.OnCollect();
                     }
                 }
             }
@@ -177,7 +161,7 @@ namespace RPG
             Vector2 direction = (mousePosition - transform.position).normalized;
             Direction = GetRelativeDir(mousePosition);
 
-            ItemHandler handler = ItemHandler.Instantiate(itemStack, 
+            DroppedItem handler = DroppedItem.Instantiate(itemStack, 
                 (Vector2)transform.position + direction * 2f, 
                 Quaternion.identity);
             handler.rb.velocity = direction * dropForce;
@@ -244,6 +228,38 @@ namespace RPG
             Direction = GetRelativeDir(point.position);
             animator.SetTrigger("Attack");
             OnAttack();
+        }
+
+        protected virtual void OnInventoryChange(Inventory inventory, ItemStack oldStack, ItemStack newStack, int targetX, int targetY)
+        {
+            if (oldStack != null && oldStack.itemHandler is EquipmentHandler)
+            {
+                EquipmentHandler handler = (EquipmentHandler)oldStack.itemHandler;
+                if (handler.IsEquipped)
+                {
+                    handler.OnUnequip();
+                }
+            }
+
+            if (targetX >= Inventory.Width - DisplaySystem.Instance.inventoryWindow.equipmentWidth)
+            {
+                if (newStack != null && newStack.itemHandler is EquipmentHandler)
+                {
+                    EquipmentHandler handler = (EquipmentHandler)newStack.itemHandler;
+                    handler.OnEquip(this);
+                }
+            }
+            else
+            {
+                if (newStack != null && newStack.itemHandler is EquipmentHandler)
+                {
+                    EquipmentHandler handler = (EquipmentHandler)newStack.itemHandler;
+                    if (handler.IsEquipped)
+                    {
+                        handler.OnUnequip();
+                    }
+                }
+            }
         }
     }
 

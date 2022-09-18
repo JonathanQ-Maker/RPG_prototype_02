@@ -37,6 +37,7 @@ namespace RPG
         //# Catalog
         //#######################################################
 
-        public readonly ItemStack Apple = new ItemStack(PrefabType.Apple, "Apple\n\nMaterial");
+        public readonly ItemStack Apple = new ItemStack(1, PrefabType.Apple, "Apple\n\nMaterial", new AppleHandler());
+        public readonly ItemStack RingOfVitality = new ItemStack(1, PrefabType.RingOfVitality, "Ring of Vitality\n\nEquipment", new RingOfVitalityHandler());
     }
 }

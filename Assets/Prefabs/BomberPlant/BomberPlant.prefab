@@ -176,9 +176,12 @@ MonoBehaviour:
   rb: {fileID: 1548643521951367000}
   animator: {fileID: 8683310908696554589}
   moveSpeed: 30
+  attackDamage: 10
   bombPreab: {fileID: 3658339440566533898, guid: 6a83c94d03d97b64ca0fa0eaf66c4ea9, type: 3}
   target: {fileID: 0}
   bombSpawnTransform: {fileID: 3225199736628317087}
+  updateDelta: 0.5
+  attackCoolDown: 5
 --- !u!1 &1527373761661581353
 GameObject:
   m_ObjectHideFlags: 0

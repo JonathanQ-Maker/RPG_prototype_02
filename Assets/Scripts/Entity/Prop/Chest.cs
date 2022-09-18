@@ -38,6 +38,7 @@ namespace RPG
         {
             base.Start();
             inventory = new Inventory(2,2, this);
+            inventory[0] = ItemCatalog.Instance.RingOfVitality.Clone();
         }
 
         public override void OnHover(CharacterEntity interactee)
@@ -71,10 +72,10 @@ namespace RPG
         public void DropItem(ItemStack itemStack)
         {
             Vector2 direction = MathUtil.RandomPointUnitCircle();
-            ItemHandler handler = ItemHandler.Instantiate(itemStack,
+            DroppedItem droppedItem = DroppedItem.Instantiate(itemStack,
                 (Vector2)transform.position + direction * 2f,
                 Quaternion.identity);
-            handler.rb.velocity = direction * Random.value * 5f;
+            droppedItem.rb.velocity = direction * Random.value * 5f;
         }
     }
 }

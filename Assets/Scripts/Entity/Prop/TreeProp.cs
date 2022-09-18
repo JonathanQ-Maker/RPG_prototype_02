@@ -20,7 +20,7 @@ namespace RPG
         public override void Interact(CharacterEntity interactee)
         {
             Vector2 dropDir = MathUtil.RandomPointUnitCircle();
-            ItemHandler itemHandler = ItemHandler.Instantiate(ItemCatalog.Instance.Apple.Clone(), 
+            DroppedItem itemHandler = DroppedItem.Instantiate(ItemCatalog.Instance.Apple.Clone(), 
                 (Vector2)transform.position + dropDir, 
                 Quaternion.identity);
             itemHandler.rb.velocity = dropDir * dropForce;
