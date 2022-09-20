@@ -14,8 +14,8 @@ namespace RPG
         {
             while (User != null)
             {
-                User.Heal(regenPerTick, null);
                 yield return new WaitForSeconds(tickPeriod);
+                User.Heal(regenPerTick, null); // heal after wait to avoid effect cooldown abuse by swapping into slot
             }
         }
 

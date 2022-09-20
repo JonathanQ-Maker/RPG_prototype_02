@@ -34,6 +34,7 @@ namespace RPG
         public EquipmentWindow inventoryWindow;
         public Slider healthSider;
         public TMP_Text healthText;
+        public Canvas worldCanvas;
         public int DisplayHealth
         {
             set
@@ -99,6 +100,24 @@ namespace RPG
         {
             propInventoryWindow.Active = !propInventoryWindow.Active;
             return propInventoryWindow.Active;
+        }
+
+        /// <summary>
+        /// Spawn a text UI indicator in world space
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="position"></param>
+        /// <param name="lifeTime"></param>
+        /// <returns></returns>
+        public Indicator ShowIndicator(string msg, Vector2 position, float lifeTime)
+        {
+            Indicator indicator = Instantiate(AssetManager.GetPrefab<Indicator>(PrefabType.Indicator),
+                position,
+                Quaternion.identity,
+                worldCanvas.transform);
+            indicator.Text = msg;
+            indicator.lifeTime = lifeTime;
+            return indicator;
         }
     }
 }

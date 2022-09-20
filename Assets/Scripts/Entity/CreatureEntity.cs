@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RPG
 {
-    public class CreatureEntity : Entity
+    public abstract class CreatureEntity : Entity
     {
         public Rigidbody2D rb;
         public Animator animator;
@@ -48,8 +48,15 @@ namespace RPG
             for (; ; )
             {
                 UpdateSortingOrder();
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.05f);
             }
+        }
+
+        public override void Hurt(int damage, Entity attacker)
+        {
+            base.Hurt(damage, attacker);
+            DisplaySystem.Instance.ShowIndicator("" + damage, 
+                transform.position + Random.insideUnitSphere, 2f);
         }
     }
 }
