@@ -211,7 +211,7 @@ namespace RPG
             {
                 if (collider2D.TryGetComponent(out Entity entity) && collider2D.gameObject != gameObject)
                 {
-                    entity.Hurt(1, this);
+                    entity.Hurt(AttackDamage, this);
                 }
             }
         }

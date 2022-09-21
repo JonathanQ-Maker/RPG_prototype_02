@@ -64,7 +64,7 @@ namespace RPG
 
         private void Awake()
         {
-            CheckInstance(); // always first
+            CheckInstance(); // should always first
 
             CheckHealthSlider();
         }
