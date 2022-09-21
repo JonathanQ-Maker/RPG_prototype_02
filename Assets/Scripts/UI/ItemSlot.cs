@@ -50,7 +50,7 @@ namespace RPG
             if (eventData.pointerDrag != null)
             {
                 InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-                if (inventoryItem != null)
+                if (inventoryItem != null && inventoryItem != this.inventoryItem)
                 {
                     if (this.inventoryItem == null)
                     {
