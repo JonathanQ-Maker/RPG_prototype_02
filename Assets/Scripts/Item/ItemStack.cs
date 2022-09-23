@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RPG
 {
@@ -43,10 +44,11 @@ namespace RPG
             }
         }
         public string toolTip;
+        public readonly bool stackable;
 
         private int count;
 
-        public ItemStack(int count, PrefabType prefabType, string toolTip, ItemHandler itemHandler)
+        public ItemStack(int count, PrefabType prefabType, string toolTip, ItemHandler itemHandler, bool stackable = true)
         {
             this.count = count;
             this.prefabType = prefabType;
@@ -54,6 +56,7 @@ namespace RPG
             this.itemHandler = itemHandler;
             if (itemHandler != null)
                 itemHandler.ItemStack = this;
+            this.stackable = stackable;
 
 #if DEBUG_MEM
             itemStacks.Add(new WeakReference(this));
@@ -67,7 +70,7 @@ namespace RPG
         /// <returns>is other ItemStack empty</returns>
         public bool Add(ItemStack other)
         {
-            if (other == this)
+            if (other == this && stackable)
             {
                 int sum = other.Count + Count;
                 int leftOver = Math.Max(sum - MAX_STACK, 0);
@@ -118,7 +121,7 @@ namespace RPG
             ItemHandler itemHandler = this.itemHandler == null ? null : (ItemHandler)Activator.CreateInstance(this.itemHandler.GetType());
             ItemStack itemStack = new ItemStack(Count, 
                 prefabType, 
-                toolTip, itemHandler);
+                toolTip, itemHandler, stackable);
             return itemStack;
         }
     }

@@ -6,5 +6,6 @@
     // Item handlers
     Apple,
     RingOfVitality,
-    ShortSword
+    ShortSword,
+    BroadSword
 }

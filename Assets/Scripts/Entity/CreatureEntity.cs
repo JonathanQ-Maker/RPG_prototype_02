@@ -33,6 +33,19 @@ namespace RPG
             }
         }
 
+        public virtual bool IsDead
+        {
+            get
+            {
+                return Health <= 0;
+            }
+
+            set 
+            {
+                Health = 0;
+            }
+        }
+
         [SerializeField] // makes editable in unity
         protected float moveSpeed = 2f;
         [SerializeField]

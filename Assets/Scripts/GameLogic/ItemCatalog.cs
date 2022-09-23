@@ -38,7 +38,8 @@ namespace RPG
         //#######################################################
 
         public readonly ItemStack Apple = new ItemStack(1, PrefabType.Apple, "Apple\n\nMaterial", new AppleHandler());
-        public readonly ItemStack RingOfVitality = new ItemStack(1, PrefabType.RingOfVitality, "Ring of Vitality\n\nEquipment", new RingOfVitalityHandler());
-        public readonly ItemStack ShortSword = new ItemStack(1, PrefabType.ShortSword, "Short Sword\n\n1 Attack Damage", new ShortSwordHandler());
+        public readonly ItemStack RingOfVitality = new ItemStack(1, PrefabType.RingOfVitality, "Ring of Vitality\n\nGives the user regeration\nEquipment", new RingOfVitalityHandler(), false);
+        public readonly ItemStack ShortSword = new ItemStack(1, PrefabType.ShortSword, "Short Sword\n\n1 Attack Damage\nEquipment", new ShortSwordHandler(), false);
+        public readonly ItemStack BroadSword = new ItemStack(1, PrefabType.BroadSword, "Broad Sword\n\n5 Attack Damage\nEquipment", new BroadSwordHandler(), false);
     }
 }

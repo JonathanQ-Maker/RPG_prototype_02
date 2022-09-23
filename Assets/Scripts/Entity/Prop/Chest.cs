@@ -38,8 +38,10 @@ namespace RPG
         {
             base.Start();
             inventory = new Inventory(2,2, this);
+
             inventory[0] = ItemCatalog.Instance.RingOfVitality.Clone();
             inventory[1] = ItemCatalog.Instance.ShortSword.Clone();
+            inventory[2] = ItemCatalog.Instance.BroadSword.Clone();
         }
 
         public override void OnHover(CharacterEntity interactee)
